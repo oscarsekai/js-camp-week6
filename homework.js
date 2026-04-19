@@ -52,6 +52,7 @@ async function getCart() {
 			finalTotal: data.finalTotal
 		}
 	} catch(error) {
+		console.error("getCart 錯誤:", error.message)
 		throw error
 	}
 }
@@ -104,7 +105,7 @@ async function addToCart(productId, quantity) {
 			const res = await fetch(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, {
 				method: 'POST',
 				headers: {
-					"content-TYpe": "application/json"
+					"content-Type": "application/json"
 				},
 				body: JSON.stringify({
 					data: {
@@ -116,11 +117,12 @@ async function addToCart(productId, quantity) {
 			
 			const data = await res.json()
 			return {
-				carts: [...data.carts],
+				carts: data.carts,
 				total: data.total,
 				finalTotal: data.finalTotal
 			}
 		} catch(error) {
+			console.error("addToCart 錯誤:", error.message)
 			throw error
 		}
 
@@ -142,7 +144,7 @@ async function updateCartItem(cartId, quantity) {
 		const res = await fetch(`${BASE_URL}/api/livejs/v1/customer/${API_PATH}/carts`, {
 			method: "PATCH",
 			headers: {
-				"content-TYpe": "application/json"
+				"content-Type": "application/json"
 			},
 			body: JSON.stringify({
 				data:{
@@ -154,6 +156,7 @@ async function updateCartItem(cartId, quantity) {
 		const data = await res.json()
 		return data
 	} catch(error) {
+		console.error("updateCartItem 錯誤:", error.message)
 		throw error
 	}
 
@@ -174,7 +177,8 @@ async function removeCartItem(cartId) {
 		const data = await res.json()
 		return data
 	} catch(error) {
-		throw error	
+		console.error("removeCartItem 錯誤:", error.message)
+		throw error
 	}
 }
 
@@ -192,6 +196,7 @@ async function clearCart() {
 		const data = await res.json()
 		return data
 	} catch(error) {
+		console.error("clearCart 錯誤:", error.message)
 		throw error
 	}
 	
@@ -217,7 +222,7 @@ async function clearCart() {
 		GET: 取得資源
 		POST: 新增資源
 		PATCH: 部分更新資源
-		PUT: 部分更新資源
+		PUT: 完全更新資源
 		DELETE: 刪除資源	
 3. 什麼是 RESTful API？
    答：
